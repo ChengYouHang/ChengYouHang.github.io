@@ -142,24 +142,24 @@
 
   .logo {
     justify-self: start;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 14px;
+    font-family: inherit;          /* 与参考图一致：比例无衬线粗体，不再用等宽 */
+    font-size: 15px;
     font-weight: 700;
-    letter-spacing: 0.05em;
+    letter-spacing: 0;
     color: var(--text);
     transition: all 0.2s ease-in-out;
   }
 
   .logo:hover { color: var(--accent); }
 
-  /* 绿色方块呼吸灯 */
+  /* 绿色方块呼吸灯（底边对齐文字基线，同参考图） */
   .logo-dot {
     display: inline-block;
     width: 10px;
     height: 10px;
-    margin-left: 6px;
+    margin-left: 7px;
     background: var(--dot);
-    vertical-align: middle;
+    vertical-align: baseline;
     animation: logo-breathe 2.4s ease-in-out infinite;
   }
 
@@ -240,9 +240,11 @@
     color: var(--text);
   }
 
-  /* ---------- 主题滑块（圆形滑块，沿轨道垂直中线运行） ---------- */
+  /* ---------- 主题滑块（圆形滑块，flex 物理居中） ---------- */
   .theme-switch {
-    position: relative;
+    display: flex;
+    align-items: center;           /* 垂直方向由 flex 居中，杜绝偏移 */
+    justify-content: flex-start;
     flex: 0 0 auto;
     width: 40px;
     height: 20px;
@@ -255,12 +257,10 @@
   }
 
   .theme-switch .knob {
-    position: absolute;
-    top: 50%;
-    left: 2px;
-    width: 14px;
-    height: 14px;
-    margin-top: -7px;              /* 圆心正落在轨道中线 */
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+    margin-left: 1px;
     border-radius: 50% !important; /* 圆形滑块 */
     background: var(--muted);
     transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
