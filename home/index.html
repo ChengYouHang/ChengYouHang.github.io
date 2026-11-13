@@ -31,6 +31,7 @@
     --border: #30363d;
     --hover: #ffffff;
     --accent: #3fb950;
+    --dot: #b3f240;
   }
 
   html[data-theme="light"] {
@@ -43,6 +44,7 @@
     --border: #d0d7de;
     --hover: #000000;
     --accent: #1a7f37;
+    --dot: #4cd964;
   }
 
   * {
@@ -149,6 +151,26 @@
   }
 
   .logo:hover { color: var(--accent); }
+
+  /* 绿色方块呼吸灯 */
+  .logo-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 6px;
+    background: var(--dot);
+    vertical-align: middle;
+    animation: logo-breathe 2.4s ease-in-out infinite;
+  }
+
+  @keyframes logo-breathe {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.25; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-dot { animation: none; }
+  }
 
   .nav-links {
     justify-self: center;
@@ -460,7 +482,7 @@
 
 <header class="header">
   <div class="header-inner">
-    <a href="#top" class="logo">cyhcloud.com</a>
+    <a href="https://www.cyhcloud.com/home/" class="logo">cyhcloud.com<span class="logo-dot" aria-hidden="true"></span></a>
 
     <nav class="nav-links" aria-label="Primary">
       <a href="#mods" data-i18n="nav.mods">模组</a><span class="sep" aria-hidden="true">|</span>
