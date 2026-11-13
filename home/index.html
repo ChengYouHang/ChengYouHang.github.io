@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CYH CLOUD — 学生开发者 & Minecraft 模组作者</title>
-<meta name="description" content="CYH CLOUD — student developer from Shanghai. Minecraft mod author, low-level logic and network performance.">
+<title>CYH CLOUD</title>
+<meta name="description" content="CYH CLOUD — student developer and Minecraft mod author. Mods and software are available for download on this site.">
 <meta name="theme-color" content="#0d1117" id="theme-color">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230d1117'/%3E%3Ctext x='8' y='12' font-family='monospace' font-size='11' fill='%23c9d1d9' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
 <script>
@@ -218,14 +218,15 @@
     color: var(--text);
   }
 
-  /* ---------- 主题滑块（方形，零圆角） ---------- */
+  /* ---------- 主题滑块（圆形滑块，沿轨道垂直中线运行） ---------- */
   .theme-switch {
     position: relative;
     flex: 0 0 auto;
-    width: 38px;
+    width: 40px;
     height: 20px;
     padding: 0;
     border: 1px solid var(--border);
+    border-radius: 999px !important;
     background: transparent;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
@@ -233,10 +234,12 @@
 
   .theme-switch .knob {
     position: absolute;
-    top: 2px;
+    top: 50%;
     left: 2px;
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
+    margin-top: -7px;              /* 圆心正落在轨道中线 */
+    border-radius: 50% !important; /* 圆形滑块 */
     background: var(--muted);
     transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
   }
@@ -506,7 +509,7 @@
   <h1 class="hero-title">CYH CLOUD</h1>
   <div class="hero-subtitle" data-i18n="subtitle">学生开发者 &amp; Minecraft 模组作者</div>
 
-  <p class="hero-intro" data-i18n="intro">现居上海，使用 Java、Python、C++ 进行开发，专注于底层逻辑重构与网络性能优化，代表项目为《No Original Trains》。</p>
+  <p class="hero-intro" data-i18n="intro">初中生开发者，开发 Minecraft 1.20.1 模组与各类小型软件。模组和软件均在本站提供下载；全部项目采用 MIT 协议开源，代码托管于 GitHub。</p>
 </main>
 
 <footer class="site-footer">
@@ -573,7 +576,7 @@
       nav: { mods: '模组', software: '软件', blog: '博客', video: '视频' },
       ui: { theme: '主题' },
       subtitle: '学生开发者 & Minecraft 模组作者',
-      title: 'CYH CLOUD — 学生开发者 & Minecraft 模组作者',
+      title: 'CYH CLOUD',
       intro: '初中生开发者，开发 Minecraft 1.20.1 模组与各类小型软件。模组和软件均在本站提供下载；全部项目采用 MIT 协议开源，代码托管于 GitHub。',
       footer: {
         product: { title: '产品矩阵', mods: '模组', software: '软件', blog: '博客', video: '视频' },
@@ -587,7 +590,7 @@
       nav: { mods: '模組', software: '軟體', blog: '部落格', video: '影片' },
       ui: { theme: '主題' },
       subtitle: '學生開發者 & Minecraft 模組作者',
-      title: 'CYH CLOUD — 學生開發者 & Minecraft 模組作者',
+      title: 'CYH CLOUD',
       intro: '國中生開發者，開發 Minecraft 1.20.1 模組與各類小型軟體。模組與軟體均在本站提供下載；全部專案採用 MIT 協議開源，程式碼託管於 GitHub。',
       footer: {
         product: { title: '產品矩陣', mods: '模組', software: '軟體', blog: '部落格', video: '影片' },
@@ -601,7 +604,7 @@
       nav: { mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Video' },
       ui: { theme: 'Theme' },
       subtitle: 'Student Developer & Minecraft Mod Author',
-      title: 'CYH CLOUD — Student Developer & Minecraft Mod Author',
+      title: 'CYH CLOUD',
       intro: 'A junior-high student developer building Minecraft 1.20.1 mods and small utilities. Both mods and software are available for download on this site; every project is MIT-licensed and hosted on GitHub.',
       footer: {
         product: { title: 'Products', mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Video' },
@@ -615,7 +618,7 @@
       nav: { mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Video' },
       ui: { theme: 'Theme' },
       subtitle: 'Student Developer & Minecraft Mod Author',
-      title: 'CYH CLOUD — Student Developer & Minecraft Mod Author',
+      title: 'CYH CLOUD',
       intro: 'A junior-high student developer building Minecraft 1.20.1 mods and small utilities. Both mods and software are available for download on this site; every project is MIT-licensed and hosted on GitHub.',
       footer: {
         product: { title: 'Products', mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Video' },
@@ -629,7 +632,7 @@
       nav: { mods: 'Mods', software: 'Logiciels', blog: 'Blog', video: 'Vidéo' },
       ui: { theme: 'Thème' },
       subtitle: 'Développeur étudiant & auteur de mods Minecraft',
-      title: 'CYH CLOUD — Développeur étudiant & auteur de mods Minecraft',
+      title: 'CYH CLOUD',
       intro: "Développeur collégien : je crée des mods Minecraft 1.20.1 et de petits logiciels. Les mods comme les logiciels sont téléchargeables sur ce site ; tous les projets sont open source sous licence MIT et hébergés sur GitHub.",
       footer: {
         product: { title: 'Produits', mods: 'Mods', software: 'Logiciels', blog: 'Blog', video: 'Vidéo' },
@@ -643,7 +646,7 @@
       nav: { mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Video' },
       ui: { theme: 'Design' },
       subtitle: 'Studentischer Entwickler & Minecraft-Mod-Autor',
-      title: 'CYH CLOUD — Studentischer Entwickler & Minecraft-Mod-Autor',
+      title: 'CYH CLOUD',
       intro: 'Schüler und Entwickler: Ich baue Minecraft-1.20.1-Mods und kleine Programme. Mods und Software gibt es beide hier zum Download; alle Projekte sind unter MIT-Lizenz open source und auf GitHub gehostet.',
       footer: {
         product: { title: 'Produkte', mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Video' },
@@ -657,7 +660,7 @@
       nav: { mods: 'モッド', software: 'ソフトウェア', blog: 'ブログ', video: '動画' },
       ui: { theme: 'テーマ' },
       subtitle: '学生開発者 & Minecraft モッド作者',
-      title: 'CYH CLOUD — 学生開発者 & Minecraft モッド作者',
+      title: 'CYH CLOUD',
       intro: '中学生開発者。Minecraft 1.20.1 の Mod と小規模なソフトウェアを開発しています。Mod もソフトウェアも当サイトからダウンロードできます。すべてのプロジェクトは MIT ライセンスでオープンソース化し、GitHub で公開しています。',
       footer: {
         product: { title: 'プロダクト', mods: 'モッド', software: 'ソフトウェア', blog: 'ブログ', video: '動画' },
@@ -671,7 +674,7 @@
       nav: { mods: '모드', software: '소프트웨어', blog: '블로그', video: '영상' },
       ui: { theme: '테마' },
       subtitle: '학생 개발자 & Minecraft 모드 제작자',
-      title: 'CYH CLOUD — 학생 개발자 & Minecraft 모드 제작자',
+      title: 'CYH CLOUD',
       intro: '중학생 개발자로, Minecraft 1.20.1 모드와 각종 소형 소프트웨어를 개발합니다. 모드와 소프트웨어 모두 이 사이트에서 내려받을 수 있습니다. 모든 프로젝트는 MIT 라이선스로 오픈소스이며 GitHub에 호스팅됩니다.',
       footer: {
         product: { title: '프로덕트', mods: '모드', software: '소프트웨어', blog: '블로그', video: '영상' },
@@ -685,7 +688,7 @@
       nav: { mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Vídeo' },
       ui: { theme: 'Tema' },
       subtitle: 'Desarrollador estudiante y autor de mods de Minecraft',
-      title: 'CYH CLOUD — Desarrollador estudiante y autor de mods de Minecraft',
+      title: 'CYH CLOUD',
       intro: 'Desarrollador de secundaria: creo mods de Minecraft 1.20.1 y pequeños programas. Tanto los mods como el software se pueden descargar en este sitio; todos los proyectos son open source bajo licencia MIT y están alojados en GitHub.',
       footer: {
         product: { title: 'Productos', mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Vídeo' },
@@ -699,7 +702,7 @@
       nav: { mods: 'Моды', software: 'Софт', blog: 'Блог', video: 'Видео' },
       ui: { theme: 'Тема' },
       subtitle: 'Студент-разработчик и автор модов для Minecraft',
-      title: 'CYH CLOUD — Студент-разработчик и автор модов для Minecraft',
+      title: 'CYH CLOUD',
       intro: 'Разработчик-школьник: делаю моды для Minecraft 1.20.1 и небольшие программы. И моды, и программы можно скачать на этом сайте; все проекты с открытым исходным кодом под лицензией MIT, размещены на GitHub.',
       footer: {
         product: { title: 'Продукты', mods: 'Моды', software: 'Софт', blog: 'Блог', video: 'Видео' },
