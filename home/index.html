@@ -4,9 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CYH CLOUD</title>
-<meta name="description" content="CYH CLOUD — student developer and Minecraft mod author. Mods and software are available for download on this site.">
+<meta name="description" content="CYH CLOUD — 学生开发者与 Minecraft 模组作者。开发 Minecraft 1.20.1 模组与各类小型软件，模组和软件均在本站提供下载，全部项目采用 MIT 协议开源。">
 <meta name="theme-color" content="#0d1117" id="theme-color">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230d1117'/%3E%3Ctext x='8' y='12' font-family='monospace' font-size='11' fill='%23c9d1d9' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
+<link rel="canonical" href="https://www.cyhcloud.com/home/">
+
+<!-- 分享卡片（微信 / QQ / Twitter 等） -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CYH CLOUD">
+<meta property="og:title" content="CYH CLOUD">
+<meta property="og:description" content="学生开发者与 Minecraft 模组作者。模组和软件均在本站提供下载，全部项目采用 MIT 协议开源。">
+<meta property="og:url" content="https://www.cyhcloud.com/home/">
+<meta property="og:image" content="https://www.cyhcloud.com/home/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CYH CLOUD">
+<meta name="twitter:description" content="学生开发者与 Minecraft 模组作者。模组和软件均在本站提供下载。">
+<meta name="twitter:image" content="https://www.cyhcloud.com/home/assets/og.png">
+
+<!-- favicon：跟随系统深浅色，浅色标签栏里不再是一块黑 -->
+<link rel="icon" type="image/svg+xml" media="(prefers-color-scheme: dark)"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230d1117'/%3E%3Ctext x='8' y='12' font-family='monospace' font-size='11' fill='%23c9d1d9' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" media="(prefers-color-scheme: light)"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23ffffff'/%3E%3Ctext x='8' y='12' font-family='monospace' font-size='11' fill='%231f2328' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
 <script>
   // 主题在首帧前定好，避免闪白；脏值兜底
   (function () {
@@ -251,6 +271,7 @@
 
   /* ---------- 主题滑块（圆形滑块，flex 物理居中） ---------- */
   .theme-switch {
+    position: relative;
     display: flex;
     align-items: center;           /* 垂直方向由 flex 居中，杜绝偏移 */
     justify-content: flex-start;
@@ -284,6 +305,16 @@
   .theme-switch:hover .knob { background: var(--text); }
 
   html[data-theme="light"] .theme-switch:hover .knob { background: var(--accent); }
+
+  /* 视觉仍是 40×20，触摸热区扩到约 56×44（iOS 建议 ≥44px） */
+  .theme-switch::after {
+    content: "";
+    position: absolute;
+    top: -12px;
+    bottom: -12px;
+    left: -8px;
+    right: -8px;
+  }
 
   .menu-btn {
     display: none;
@@ -412,7 +443,7 @@
     margin-bottom: 30px;
   }
 
-  .footer-col h4 {
+  .footer-col h2 {
     margin: 0 0 10px;
     font-size: 12px;
     font-weight: 600;
@@ -468,6 +499,9 @@
     .menu-btn { display: block; }
 
     .mobile-menu { display: block; }
+
+    /* iOS 对字号 <16px 的表单控件会强制缩放整页，这里提到 16px 避免误触放大 */
+    select { font-size: 16px; padding: 5px 24px 5px 9px; }
   }
 
   @media (max-width: 768px) {
@@ -489,6 +523,9 @@
     }
 
     .footer-legal { flex-wrap: wrap; gap: 10px 14px; }
+
+    /* 手机端按钮加大，便于手指点按 */
+    .cookie-actions button { font-size: 13px; padding: 8px 14px; }
   }
 
   /* ---------- Cookie 语言提示（右下角，10 秒倒计时） ---------- */
@@ -628,7 +665,7 @@
     <div class="footer-grid">
 
       <div class="footer-col">
-        <h4 data-i18n="footer.product.title">产品矩阵</h4>
+        <h2 data-i18n="footer.product.title">产品矩阵</h2>
         <ul>
           <li><a href="#mods" data-i18n="footer.product.mods">模组</a></li>
           <li><a href="#software" data-i18n="footer.product.software">软件</a></li>
@@ -638,7 +675,7 @@
       </div>
 
       <div class="footer-col">
-        <h4 data-i18n="footer.dev.title">开发者资源</h4>
+        <h2 data-i18n="footer.dev.title">开发者资源</h2>
         <ul>
           <li><a href="https://github.com/" target="_blank" rel="noopener" data-i18n="footer.dev.github">GitHub 仓库</a></li>
           <li><a href="https://www.curseforge.com/" target="_blank" rel="noopener" data-i18n="footer.dev.curseforge">CurseForge 主页</a></li>
@@ -646,7 +683,7 @@
       </div>
 
       <div class="footer-col">
-        <h4 data-i18n="footer.about.title">关于 CYH</h4>
+        <h2 data-i18n="footer.about.title">关于 CYH</h2>
         <ul>
           <li><a href="#about" data-i18n="footer.about.me">关于我（About）</a></li>
           <li><a href="mailto:chengyouhang@cyhcloud.com" data-i18n="footer.about.contact">联系我（Email）</a></li>
@@ -952,6 +989,12 @@
       if (text) el.textContent = text;
     });
 
+    /* 版权年份自动取当前年份，省得每年手改 */
+    var copyEl = document.querySelector('[data-i18n="footer.copyright"]');
+    if (copyEl) {
+      copyEl.textContent = copyEl.textContent.replace(/20\d{2}/, String(new Date().getFullYear()));
+    }
+
     document.title = dict.title;
     root.lang = code;
     selects.forEach(function (sel) { sel.value = code; });
@@ -981,8 +1024,10 @@
   function writeCookie(name, value, days) {
     var exp = new Date();
     exp.setTime(exp.getTime() + days * 864e5);
+    /* HTTPS 下加 Secure，防明文链路泄漏；本地 file:// 或 http 调试时不加，否则写不进去 */
+    var secure = location.protocol === 'https:' ? '; Secure' : '';
     document.cookie = name + '=' + encodeURIComponent(value) +
-      '; expires=' + exp.toUTCString() + '; path=/; SameSite=Lax';
+      '; expires=' + exp.toUTCString() + '; path=/; SameSite=Lax' + secure;
   }
 
   function hasConsent() { return readCookie(CONSENT_COOKIE) === '1'; }
