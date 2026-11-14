@@ -383,6 +383,144 @@
     color: var(--muted);
   }
 
+  /* ---------- 导航下划线 + 悬停大面板（参考腾讯云样式，面板内容待加） ---------- */
+  .nav-links a {
+    position: relative;
+    padding: 2px 0;
+  }
+
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -5px;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .nav-links a:hover::after,
+  .nav-links a:focus-visible::after { transform: scaleX(1); }
+
+  .nav-panel {
+    position: absolute;
+    top: 57px;                     /* 紧贴 header 下边缘（含 1px 边框） */
+    left: 0;
+    right: 0;
+    height: 240px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.22s ease-in-out, transform 0.22s ease-in-out,
+                visibility 0s linear 0.22s, background-color 0.3s, border-color 0.3s;
+    z-index: 19;
+  }
+
+  .header.nav-open .nav-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  /* ---------- 分享（按当前语言接入当地主流渠道） ---------- */
+  .share-wrap { position: relative; }
+
+  .share-btn {
+    font-size: 12px;
+    color: var(--muted);
+    padding: 2px 0;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .share-btn:hover { color: var(--hover); }
+
+  .share-pop {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 12px);
+    width: 232px;
+    padding: 12px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: opacity 0.18s ease-in-out, transform 0.18s ease-in-out,
+                visibility 0s linear 0.18s, background-color 0.3s, border-color 0.3s;
+    z-index: 26;
+  }
+
+  .share-pop.open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  .share-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .share-grid button {
+    font-size: 12px;
+    padding: 6px 4px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .share-grid button:hover { color: var(--hover); border-color: var(--muted); }
+
+  .share-copy {
+    width: 100%;
+    margin-top: 8px;
+    padding: 6px 0;
+    font-size: 12px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    transition: all 0.2s ease-in-out;
+  }
+
+  .share-copy:hover { border-color: var(--muted); }
+
+  .share-qr { text-align: center; }
+
+  .share-qr img {
+    display: block;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 8px;
+    padding: 6px;
+    background: #ffffff;           /* 二维码永远浅底，深色主题下也能扫 */
+    border: 1px solid var(--border);
+  }
+
+  .share-qr p { margin: 0 0 6px; font-size: 12px; color: var(--muted); }
+
+  .share-back {
+    font-size: 12px;
+    color: var(--muted);
+    padding: 2px 0;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .share-back:hover { color: var(--hover); }
+
+  .share-grid[hidden],
+  .share-qr[hidden],
+  .share-copy[hidden] { display: none; }
+
   /* ---------- 主视觉区 ---------- */
   main {
     flex: 1;
@@ -630,6 +768,7 @@
     <button class="menu-btn" id="menu-btn" type="button" aria-label="Menu"
             aria-expanded="false" aria-controls="mobile-menu">&#8801;</button>
   </div>
+  <div class="nav-panel" id="nav-panel" aria-hidden="true"></div>
 </header>
 
 <div class="mobile-menu" id="mobile-menu">
@@ -694,6 +833,20 @@
 
     <div class="footer-bottom">
       <div data-i18n="footer.copyright">Copyright © 2026 CYH. 保留所有权利。</div>
+
+      <div class="share-wrap">
+        <button type="button" class="share-btn" id="share-btn" data-i18n="share.label"
+                aria-haspopup="true" aria-expanded="false">分享</button>
+        <div class="share-pop" id="share-pop">
+          <div class="share-grid" id="share-grid"></div>
+          <div class="share-qr" id="share-qr" hidden>
+            <p data-i18n="share.qr">微信扫码分享</p>
+            <img id="share-qr-img" alt="QR">
+            <button type="button" class="share-back" id="share-back">&larr;</button>
+          </div>
+          <button type="button" class="share-copy" id="share-copy" data-i18n="share.copy">复制链接</button>
+        </div>
+      </div>
       <div class="footer-legal">
         <a href="#privacy" data-i18n="footer.privacy">隐私政策</a>
         <span class="sep" aria-hidden="true">|</span>
@@ -750,6 +903,12 @@
         allow: '允许',
         decline: '不允许'
       },
+      share: {
+        label: '分享',
+        copy: '复制链接',
+        copied: '已复制',
+        qr: '微信扫码分享'
+      },
       footer: {
         product: { title: '产品矩阵', mods: '模组', software: '软件', blog: '博客', video: '视频' },
         dev: { title: '开发者资源', github: 'GitHub 仓库', curseforge: 'CurseForge 主页' },
@@ -768,6 +927,12 @@
         text: '本站使用 Cookie 記住你的偏好。',
         allow: '允許',
         decline: '不允許'
+      },
+      share: {
+        label: '分享',
+        copy: '複製連結',
+        copied: '已複製',
+        qr: '微信掃碼分享'
       },
       footer: {
         product: { title: '產品矩陣', mods: '模組', software: '軟體', blog: '部落格', video: '影片' },
@@ -788,6 +953,12 @@
         allow: 'Allow',
         decline: 'Decline'
       },
+      share: {
+        label: 'Share',
+        copy: 'Copy link',
+        copied: 'Copied',
+        qr: 'Scan with WeChat'
+      },
       footer: {
         product: { title: 'Products', mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Video' },
         dev: { title: 'Developers', github: 'GitHub Repository', curseforge: 'CurseForge Page' },
@@ -806,6 +977,12 @@
         text: 'This site uses cookies to remember your preferences.',
         allow: 'Allow',
         decline: 'Decline'
+      },
+      share: {
+        label: 'Share',
+        copy: 'Copy link',
+        copied: 'Copied',
+        qr: 'Scan with WeChat'
       },
       footer: {
         product: { title: 'Products', mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Video' },
@@ -826,6 +1003,12 @@
         allow: 'Autoriser',
         decline: 'Refuser'
       },
+      share: {
+        label: 'Partager',
+        copy: 'Copier le lien',
+        copied: 'Lien copié',
+        qr: 'Scannez avec WeChat'
+      },
       footer: {
         product: { title: 'Produits', mods: 'Mods', software: 'Logiciels', blog: 'Blog', video: 'Vidéo' },
         dev: { title: 'Développeurs', github: 'Dépôt GitHub', curseforge: 'Page CurseForge' },
@@ -844,6 +1027,12 @@
         text: 'Diese Website verwendet Cookies, um Ihre Einstellungen zu speichern.',
         allow: 'Erlauben',
         decline: 'Ablehnen'
+      },
+      share: {
+        label: 'Teilen',
+        copy: 'Link kopieren',
+        copied: 'Kopiert',
+        qr: 'Mit WeChat scannen'
       },
       footer: {
         product: { title: 'Produkte', mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Video' },
@@ -864,6 +1053,12 @@
         allow: '許可',
         decline: '拒否'
       },
+      share: {
+        label: 'シェア',
+        copy: 'リンクをコピー',
+        copied: 'コピーしました',
+        qr: 'WeChatでスキャン'
+      },
       footer: {
         product: { title: 'プロダクト', mods: 'モッド', software: 'ソフトウェア', blog: 'ブログ', video: '動画' },
         dev: { title: '開発者向け', github: 'GitHub リポジトリ', curseforge: 'CurseForge ページ' },
@@ -882,6 +1077,12 @@
         text: '이 사이트는 쿠키를 사용해 설정을 저장합니다.',
         allow: '허용',
         decline: '거부'
+      },
+      share: {
+        label: '공유',
+        copy: '링크 복사',
+        copied: '복사됨',
+        qr: 'WeChat으로 스캔'
       },
       footer: {
         product: { title: '프로덕트', mods: '모드', software: '소프트웨어', blog: '블로그', video: '영상' },
@@ -902,6 +1103,12 @@
         allow: 'Permitir',
         decline: 'Rechazar'
       },
+      share: {
+        label: 'Compartir',
+        copy: 'Copiar enlace',
+        copied: 'Copiado',
+        qr: 'Escanea con WeChat'
+      },
       footer: {
         product: { title: 'Productos', mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Vídeo' },
         dev: { title: 'Desarrolladores', github: 'Repositorio de GitHub', curseforge: 'Página de CurseForge' },
@@ -920,6 +1127,12 @@
         text: 'Сайт использует cookie для сохранения настроек.',
         allow: 'Разрешить',
         decline: 'Запретить'
+      },
+      share: {
+        label: 'Поделиться',
+        copy: 'Скопировать ссылку',
+        copied: 'Скопировано',
+        qr: 'Отсканируйте в WeChat'
       },
       footer: {
         product: { title: 'Продукты', mods: 'Моды', software: 'Софт', blog: 'Блог', video: 'Видео' },
@@ -998,6 +1211,9 @@
     document.title = dict.title;
     root.lang = code;
     selects.forEach(function (sel) { sel.value = code; });
+
+    /* 分享弹层开着时同步重建渠道列表（渠道按语言区分） */
+    if (typeof sharePop !== 'undefined' && sharePop.classList.contains('open')) buildShareGrid();
   }
 
   /* ---------- Cookie 同意与偏好存储（通用，不止语言） ---------- */
@@ -1159,6 +1375,169 @@
   }
 
   window.addEventListener('resize', syncMenuState);
+
+  /* ---------- 导航悬停大面板（面板内容待加，先做容器与动效） ---------- */
+  var headerEl = document.querySelector('.header');
+  var navLinksEl = document.querySelector('.nav-links');
+  var navPanel = document.getElementById('nav-panel');
+  var navCloseTimer = null;
+
+  function openNavPanel() {
+    if (navCloseTimer) { clearTimeout(navCloseTimer); navCloseTimer = null; }
+    headerEl.classList.add('nav-open');
+    navPanel.setAttribute('aria-hidden', 'false');
+  }
+
+  function scheduleNavClose() {
+    if (navCloseTimer) clearTimeout(navCloseTimer);
+    navCloseTimer = setTimeout(function () {
+      headerEl.classList.remove('nav-open');
+      navPanel.setAttribute('aria-hidden', 'true');
+      navCloseTimer = null;
+    }, 160);
+  }
+
+  if (navLinksEl && navPanel) {
+    navLinksEl.addEventListener('mouseenter', openNavPanel);
+    navLinksEl.addEventListener('mouseleave', scheduleNavClose);
+    navLinksEl.addEventListener('focusin', openNavPanel);
+    navLinksEl.addEventListener('focusout', scheduleNavClose);
+    navPanel.addEventListener('mouseenter', openNavPanel);
+    navPanel.addEventListener('mouseleave', scheduleNavClose);
+  }
+
+  /* ---------- 分享：按当前语言接入当地主流渠道 ---------- */
+  var SHARE_URL = 'https://www.cyhcloud.com/home/';
+  var shareBtn = document.getElementById('share-btn');
+  var sharePop = document.getElementById('share-pop');
+  var shareGrid = document.getElementById('share-grid');
+  var shareQr = document.getElementById('share-qr');
+  var shareQrImg = document.getElementById('share-qr-img');
+  var shareCopy = document.getElementById('share-copy');
+  var shareBack = document.getElementById('share-back');
+
+  var SHARE_NAMES = {
+    wechat: '微信', qq: 'QQ', weibo: '微博',
+    x: 'X', facebook: 'Facebook', reddit: 'Reddit',
+    whatsapp: 'WhatsApp', line: 'LINE', kakaotalk: 'KakaoTalk',
+    telegram: 'Telegram', vk: 'VK'
+  };
+
+  /* 各语言的当地主流渠道（按曝光度排序） */
+  var SHARE_CHANNELS = {
+    'zh-CN': ['wechat', 'qq', 'weibo'],
+    'zh-TW': ['wechat', 'qq', 'weibo'],
+    'en-US': ['x', 'facebook', 'reddit'],
+    'en-GB': ['x', 'facebook', 'reddit'],
+    'fr':    ['x', 'facebook'],
+    'de':    ['whatsapp', 'x'],
+    'ja':    ['x', 'line'],
+    'ko':    ['kakaotalk', 'x'],
+    'es':    ['whatsapp', 'x'],
+    'ru':    ['telegram', 'vk']
+  };
+
+  function shareLink(type) {
+    var dict = I18N[root.lang] || I18N[FALLBACK];
+    var text = (dict.title || '') + ' - ' + (getPath(dict, 'subtitle') || '');
+    var u = encodeURIComponent(SHARE_URL);
+    var t = encodeURIComponent(text);
+    switch (type) {
+      case 'x':         return 'https://twitter.com/intent/tweet?url=' + u + '&text=' + t;
+      case 'facebook':  return 'https://www.facebook.com/sharer/sharer.php?u=' + u;
+      case 'reddit':    return 'https://www.reddit.com/submit?url=' + u + '&title=' + t;
+      case 'whatsapp':  return 'https://api.whatsapp.com/send?text=' + encodeURIComponent(text + ' ' + SHARE_URL);
+      case 'line':      return 'https://social-plugins.line.me/lineit/share?url=' + u;
+      case 'kakaotalk': return 'https://story.kakao.com/s/share?url=' + u;
+      case 'telegram':  return 'https://t.me/share/url?url=' + u + '&text=' + t;
+      case 'vk':        return 'https://vk.com/share.php?url=' + u;
+      case 'qq':        return 'https://connect.qq.com/widget/shareqq/index.html?url=' + u + '&title=' + t;
+      case 'weibo':     return 'https://service.weibo.com/share/share.php?url=' + u + '&title=' + t;
+    }
+    return '';
+  }
+
+  function buildShareGrid() {
+    var chans = SHARE_CHANNELS[root.lang] || SHARE_CHANNELS[FALLBACK];
+    shareGrid.innerHTML = '';
+    chans.forEach(function (type) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = SHARE_NAMES[type];
+      b.addEventListener('click', function () {
+        if (type === 'wechat') { showShareQr(); return; }   /* 微信网页端无直接分享，走二维码 */
+        window.open(shareLink(type), '_blank', 'noopener');
+        closeSharePop();
+      });
+      shareGrid.appendChild(b);
+    });
+  }
+
+  function showShareQr() {
+    shareGrid.hidden = true;
+    shareCopy.hidden = true;
+    shareQr.hidden = false;
+    shareQrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent(SHARE_URL);
+  }
+
+  function resetSharePop() {
+    shareGrid.hidden = false;
+    shareCopy.hidden = false;
+    shareQr.hidden = true;
+  }
+
+  function openSharePop() {
+    resetSharePop();
+    buildShareGrid();
+    sharePop.classList.add('open');
+    shareBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeSharePop() {
+    sharePop.classList.remove('open');
+    shareBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  shareBtn.addEventListener('click', function () {
+    if (sharePop.classList.contains('open')) { closeSharePop(); } else { openSharePop(); }
+  });
+
+  shareBack.addEventListener('click', function () {
+    shareQr.hidden = true;
+    shareGrid.hidden = false;
+    shareCopy.hidden = false;
+  });
+
+  shareCopy.addEventListener('click', function () {
+    var dict = I18N[root.lang] || I18N[FALLBACK];
+    var done = function () {
+      shareCopy.textContent = (dict.share && dict.share.copied) || 'OK';
+      setTimeout(function () {
+        shareCopy.textContent = (dict.share && dict.share.copy) || 'Copy';
+      }, 1500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(SHARE_URL).then(done, done);
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = SHARE_URL;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+      done();
+    }
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!sharePop.classList.contains('open')) return;
+    if (sharePop.contains(e.target) || shareBtn.contains(e.target)) return;
+    closeSharePop();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeSharePop();
+  });
 
   /* ---------- 初始化 ---------- */
   buildOptions();
