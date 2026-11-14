@@ -10,8 +10,17 @@
 <script>
   // 主题在首帧前定好，避免闪白；脏值兜底
   (function () {
-    var saved = null;
-    try { saved = localStorage.getItem('cyh-theme'); } catch (e) {}
+    function readCookie(n) {
+      var m = document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]*)'));
+      return m ? decodeURIComponent(m[1]) : null;
+    }
+    var saved = readCookie('cyh_theme');   /* 同意过 Cookie 才会存在 */
+    if (saved !== 'light' && saved !== 'dark') {
+      try {
+        var legacy = localStorage.getItem('cyh-theme');   /* 兼容老访客 */
+        if (legacy === 'light' || legacy === 'dark') saved = legacy;
+      } catch (e) {}
+    }
     if (saved !== 'light' && saved !== 'dark') {
       var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
       saved = prefersLight ? 'light' : 'dark';
@@ -498,8 +507,25 @@
 
   .cookie-note[hidden] { display: none; }
 
+  .cookie-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin-bottom: 12px;
+  }
+
+  .cookie-ico {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+    color: var(--muted);
+  }
+
+  .cookie-ico .cookie-hole { fill: var(--panel); }
+
   .cookie-note p {
-    margin: 0 0 12px;
+    margin: 0;
     font-size: 12.5px;
     line-height: 1.6;
     color: var(--muted);
@@ -639,7 +665,16 @@
 
 <div class="cookie-note" id="cookie-note" role="dialog" aria-live="polite"
      aria-labelledby="cookie-note-text" hidden>
-  <p id="cookie-note-text" data-i18n="cookie.text">本站使用 Cookie 记录你的语言选择，是否允许？</p>
+  <div class="cookie-head">
+    <svg class="cookie-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="11.4" cy="12.6" r="8.4" fill="currentColor"/>
+      <circle cx="17.6" cy="5.9" r="4.4" class="cookie-hole"/>
+      <circle cx="8" cy="10.2" r="1.25" class="cookie-hole"/>
+      <circle cx="9.4" cy="15.6" r="1.35" class="cookie-hole"/>
+      <circle cx="13.9" cy="14" r="1.15" class="cookie-hole"/>
+    </svg>
+    <p id="cookie-note-text" data-i18n="cookie.text">本站使用 Cookie 记住你的偏好（语言、主题等）。10 秒后默认允许。</p>
+  </div>
   <div class="cookie-actions">
     <span class="cookie-count" id="cookie-count">10s</span>
     <button type="button" id="cookie-decline" data-i18n="cookie.decline">不允许</button>
@@ -669,7 +704,7 @@
       title: 'CYH CLOUD',
       intro: '初中生开发者，开发 Minecraft 1.20.1 模组与各类小型软件。模组和软件均在本站提供下载；全部项目采用 MIT 协议开源，代码托管于 GitHub。',
       cookie: {
-        text: '本站使用 Cookie 记录你的语言选择，是否允许？',
+        text: '本站使用 Cookie 记住你的偏好（语言、主题等）。10 秒后默认允许。',
         allow: '允许',
         decline: '不允许'
       },
@@ -688,7 +723,7 @@
       title: 'CYH CLOUD',
       intro: '國中生開發者，開發 Minecraft 1.20.1 模組與各類小型軟體。模組與軟體均在本站提供下載；全部專案採用 MIT 協議開源，程式碼託管於 GitHub。',
       cookie: {
-        text: '本站使用 Cookie 記錄你的語言選擇，是否允許？',
+        text: '本站使用 Cookie 記住你的偏好（語言、主題等）。10 秒後預設允許。',
         allow: '允許',
         decline: '不允許'
       },
@@ -707,7 +742,7 @@
       title: 'CYH CLOUD',
       intro: 'A junior-high student developer building Minecraft 1.20.1 mods and small utilities. Both mods and software are available for download on this site; every project is MIT-licensed and hosted on GitHub.',
       cookie: {
-        text: 'This site uses a cookie to remember your language choice. Allow?',
+        text: 'This site uses cookies to remember your preferences (language, theme, etc.). Allowed by default after 10s.',
         allow: 'Allow',
         decline: 'Decline'
       },
@@ -726,7 +761,7 @@
       title: 'CYH CLOUD',
       intro: 'A junior-high student developer building Minecraft 1.20.1 mods and small utilities. Both mods and software are available for download on this site; every project is MIT-licensed and hosted on GitHub.',
       cookie: {
-        text: 'This site uses a cookie to remember your language choice. Allow?',
+        text: 'This site uses cookies to remember your preferences (language, theme, etc.). Allowed by default after 10s.',
         allow: 'Allow',
         decline: 'Decline'
       },
@@ -745,7 +780,7 @@
       title: 'CYH CLOUD',
       intro: "Développeur collégien : je crée des mods Minecraft 1.20.1 et de petits logiciels. Les mods comme les logiciels sont téléchargeables sur ce site ; tous les projets sont open source sous licence MIT et hébergés sur GitHub.",
       cookie: {
-        text: 'Ce site utilise un cookie pour mémoriser votre langue. Autoriser ?',
+        text: 'Ce site utilise des cookies pour mémoriser vos préférences (langue, thème…). Autorisé par défaut après 10 s.',
         allow: 'Autoriser',
         decline: 'Refuser'
       },
@@ -764,7 +799,7 @@
       title: 'CYH CLOUD',
       intro: 'Schüler und Entwickler: Ich baue Minecraft-1.20.1-Mods und kleine Programme. Mods und Software gibt es beide hier zum Download; alle Projekte sind unter MIT-Lizenz open source und auf GitHub gehostet.',
       cookie: {
-        text: 'Diese Website verwendet ein Cookie, um Ihre Sprache zu speichern. Erlauben?',
+        text: 'Diese Website verwendet Cookies, um Ihre Einstellungen (Sprache, Design usw.) zu speichern. Nach 10 s automatisch erlaubt.',
         allow: 'Erlauben',
         decline: 'Ablehnen'
       },
@@ -783,7 +818,7 @@
       title: 'CYH CLOUD',
       intro: '中学生開発者。Minecraft 1.20.1 の Mod と小規模なソフトウェアを開発しています。Mod もソフトウェアも当サイトからダウンロードできます。すべてのプロジェクトは MIT ライセンスでオープンソース化し、GitHub で公開しています。',
       cookie: {
-        text: 'このサイトは言語設定を保存するために Cookie を使用します。許可しますか？',
+        text: 'このサイトは Cookie を使用して設定（言語・テーマなど）を保存します。10 秒後に自動的に許可されます。',
         allow: '許可',
         decline: '拒否'
       },
@@ -802,7 +837,7 @@
       title: 'CYH CLOUD',
       intro: '중학생 개발자로, Minecraft 1.20.1 모드와 각종 소형 소프트웨어를 개발합니다. 모드와 소프트웨어 모두 이 사이트에서 내려받을 수 있습니다. 모든 프로젝트는 MIT 라이선스로 오픈소스이며 GitHub에 호스팅됩니다.',
       cookie: {
-        text: '이 사이트는 언어 설정을 저장하기 위해 쿠키를 사용합니다. 허용하시겠습니까?',
+        text: '이 사이트는 쿠키를 사용해 설정(언어, 테마 등)을 저장합니다. 10초 후 자동으로 허용됩니다.',
         allow: '허용',
         decline: '거부'
       },
@@ -821,7 +856,7 @@
       title: 'CYH CLOUD',
       intro: 'Desarrollador de secundaria: creo mods de Minecraft 1.20.1 y pequeños programas. Tanto los mods como el software se pueden descargar en este sitio; todos los proyectos son open source bajo licencia MIT y están alojados en GitHub.',
       cookie: {
-        text: 'Este sitio usa una cookie para recordar tu idioma. ¿Permitir?',
+        text: 'Este sitio usa cookies para recordar tus preferencias (idioma, tema, etc.). Permitido por defecto tras 10 s.',
         allow: 'Permitir',
         decline: 'Rechazar'
       },
@@ -840,7 +875,7 @@
       title: 'CYH CLOUD',
       intro: 'Разработчик-школьник: делаю моды для Minecraft 1.20.1 и небольшие программы. И моды, и программы можно скачать на этом сайте; все проекты с открытым исходным кодом под лицензией MIT, размещены на GitHub.',
       cookie: {
-        text: 'Сайт использует cookie, чтобы запомнить язык. Разрешить?',
+        text: 'Сайт использует cookie для сохранения настроек (язык, тема и т. д.). Через 10 с разрешено по умолчанию.',
         allow: 'Разрешить',
         decline: 'Запретить'
       },
@@ -917,9 +952,11 @@
     selects.forEach(function (sel) { sel.value = code; });
   }
 
-  /* ---------- 语言偏好 Cookie（首次检测，手动切换需同意） ---------- */
+  /* ---------- Cookie 同意与偏好存储（通用，不止语言） ---------- */
+  var CONSENT_COOKIE = 'cyh_consent';     /* 1 = 允许用 Cookie 记录偏好 */
   var LANG_COOKIE = 'cyh_lang';
-  var CONSENT_COOKIE = 'cyh_lang_consent';
+  var THEME_COOKIE = 'cyh_theme';
+  var PREF_DAYS = 365;
   var NOTE_SECONDS = 10;
 
   var cookieNote = document.getElementById('cookie-note');
@@ -929,7 +966,7 @@
   var noteTimer = null;
   var noteLeft = NOTE_SECONDS;
   var declined = false;
-  try { declined = sessionStorage.getItem('cyh_lang_declined') === '1'; } catch (e) {}
+  try { declined = sessionStorage.getItem('cyh_cookie_declined') === '1'; } catch (e) {}
 
   function readCookie(name) {
     var m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
@@ -943,12 +980,18 @@
       '; expires=' + exp.toUTCString() + '; path=/; SameSite=Lax';
   }
 
-  function hasLangConsent() { return readCookie(CONSENT_COOKIE) === '1'; }
+  function hasConsent() { return readCookie(CONSENT_COOKIE) === '1'; }
 
-  function saveLanguage(code) {
-    if (!hasLangConsent()) return false;
-    writeCookie(LANG_COOKIE, code, 365);
+  /* 所有偏好统一走这里：没同意就一个字都不写（以后加新偏好也只需调 setPref） */
+  function setPref(name, value) {
+    if (!hasConsent()) return false;
+    writeCookie(name, value, PREF_DAYS);
     return true;
+  }
+
+  function rememberCurrentPrefs() {
+    writeCookie(LANG_COOKIE, root.lang, PREF_DAYS);
+    writeCookie(THEME_COOKIE, root.getAttribute('data-theme') === 'light' ? 'light' : 'dark', PREF_DAYS);
   }
 
   function hideCookieNote() {
@@ -959,8 +1002,21 @@
     }, 200);
   }
 
+  /* 默认允许：倒计时走完 = 同意 */
+  function acceptCookies() {
+    writeCookie(CONSENT_COOKIE, '1', PREF_DAYS);
+    rememberCurrentPrefs();
+    hideCookieNote();
+  }
+
+  function declineCookies() {
+    declined = true;
+    try { sessionStorage.setItem('cyh_cookie_declined', '1'); } catch (e) {}
+    hideCookieNote();
+  }
+
   function showCookieNote() {
-    if (declined || hasLangConsent()) return;
+    if (declined || hasConsent()) return;
 
     cookieNote.hidden = false;
     void cookieNote.offsetWidth;      /* 触发重排，让过渡生效 */
@@ -972,29 +1028,17 @@
     noteTimer = setInterval(function () {
       noteLeft -= 1;
       cookieCount.textContent = (noteLeft > 0 ? noteLeft : 0) + 's';
-      if (noteLeft <= 0) {
-        hideCookieNote();             /* 倒计时结束未选择 = 不记录 */
-      }
+      if (noteLeft <= 0) acceptCookies();   /* 10 秒无操作：默认允许 */
     }, 1000);
   }
 
-  cookieAllow.addEventListener('click', function () {
-    writeCookie(CONSENT_COOKIE, '1', 365);
-    saveLanguage(root.lang);
-    hideCookieNote();
-  });
-
-  cookieDecline.addEventListener('click', function () {
-    declined = true;
-    try { sessionStorage.setItem('cyh_lang_declined', '1'); } catch (e) {}
-    hideCookieNote();
-  });
+  cookieAllow.addEventListener('click', acceptCookies);
+  cookieDecline.addEventListener('click', declineCookies);
 
   selects.forEach(function (sel) {
     sel.addEventListener('change', function () {
       applyLanguage(sel.value);
-      if (saveLanguage(sel.value)) return;
-      if (!declined) showCookieNote();
+      setPref(LANG_COOKIE, sel.value);
     });
   });
 
@@ -1003,7 +1047,7 @@
     var next = theme === 'light' ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
 
-    try { localStorage.setItem('cyh-theme', next); } catch (e) {}
+    setPref(THEME_COOKIE, next);
 
     if (themeColorMeta) {
       themeColorMeta.setAttribute('content', next === 'dark' ? '#0d1117' : '#ffffff');
@@ -1058,14 +1102,19 @@
   /* ---------- 初始化 ---------- */
   buildOptions();
 
-  /* 首次访问：跟随浏览器语言；已同意过 Cookie 且存过偏好：用存的语言 */
-  var storedLang = hasLangConsent() ? readCookie(LANG_COOKIE) : null;
+  /* 已同意过：沿用存下的语言；没同意：跟随浏览器语言 */
+  var storedLang = hasConsent() ? readCookie(LANG_COOKIE) : null;
   var initialLang = storedLang
     ? resolveLanguage(storedLang)
     : resolveLanguage(navigator.language || navigator.userLanguage);
 
   applyLanguage(initialLang);
   setTheme(root.getAttribute('data-theme'));
+
+  /* 首次进站就提示 Cookie（默认允许，10 秒倒计时） */
+  if (!hasConsent() && !declined) {
+    setTimeout(showCookieNote, 700);
+  }
 
   window.addEventListener('load', function () {
     requestAnimationFrame(function () { root.classList.remove('preload'); });
