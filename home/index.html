@@ -476,6 +476,64 @@
 
     .footer-legal { flex-wrap: wrap; gap: 10px 14px; }
   }
+
+  /* ---------- Cookie 语言提示（右下角，10 秒倒计时） ---------- */
+  .cookie-note {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 30;
+    width: 320px;
+    max-width: calc(100vw - 40px);
+    padding: 14px 16px 12px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out,
+                background-color 0.3s, border-color 0.3s;
+  }
+
+  .cookie-note.show { opacity: 1; transform: none; }
+
+  .cookie-note[hidden] { display: none; }
+
+  .cookie-note p {
+    margin: 0 0 12px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  .cookie-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cookie-count {
+    margin-right: auto;
+    font-size: 12px;
+    color: var(--dim);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cookie-actions button {
+    font-size: 12px;
+    padding: 4px 12px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    transition: all 0.2s ease-in-out;
+  }
+
+  .cookie-actions button:hover { color: var(--hover); border-color: var(--muted); }
+
+  .cookie-actions .allow { color: var(--text); border-color: var(--muted); }
+  .cookie-actions .allow:hover { border-color: var(--text); }
+
+  @media (max-width: 768px) {
+    .cookie-note { right: 12px; left: 12px; bottom: 12px; width: auto; }
+  }
 </style>
 </head>
 <body>
@@ -579,6 +637,16 @@
   </div>
 </footer>
 
+<div class="cookie-note" id="cookie-note" role="dialog" aria-live="polite"
+     aria-labelledby="cookie-note-text" hidden>
+  <p id="cookie-note-text" data-i18n="cookie.text">本站使用 Cookie 记录你的语言选择，是否允许？</p>
+  <div class="cookie-actions">
+    <span class="cookie-count" id="cookie-count">10s</span>
+    <button type="button" id="cookie-decline" data-i18n="cookie.decline">不允许</button>
+    <button type="button" class="allow" id="cookie-allow" data-i18n="cookie.allow">允许</button>
+  </div>
+</div>
+
 <script>
   var LANGUAGES = [
     { code: 'zh-CN', name: '简体中文' },
@@ -600,6 +668,11 @@
       subtitle: '学生开发者 & Minecraft 模组作者',
       title: 'CYH CLOUD',
       intro: '初中生开发者，开发 Minecraft 1.20.1 模组与各类小型软件。模组和软件均在本站提供下载；全部项目采用 MIT 协议开源，代码托管于 GitHub。',
+      cookie: {
+        text: '本站使用 Cookie 记录你的语言选择，是否允许？',
+        allow: '允许',
+        decline: '不允许'
+      },
       footer: {
         product: { title: '产品矩阵', mods: '模组', software: '软件', blog: '博客', video: '视频' },
         dev: { title: '开发者资源', github: 'GitHub 仓库', curseforge: 'CurseForge 主页' },
@@ -614,6 +687,11 @@
       subtitle: '學生開發者 & Minecraft 模組作者',
       title: 'CYH CLOUD',
       intro: '國中生開發者，開發 Minecraft 1.20.1 模組與各類小型軟體。模組與軟體均在本站提供下載；全部專案採用 MIT 協議開源，程式碼託管於 GitHub。',
+      cookie: {
+        text: '本站使用 Cookie 記錄你的語言選擇，是否允許？',
+        allow: '允許',
+        decline: '不允許'
+      },
       footer: {
         product: { title: '產品矩陣', mods: '模組', software: '軟體', blog: '部落格', video: '影片' },
         dev: { title: '開發者資源', github: 'GitHub 儲存庫', curseforge: 'CurseForge 主頁' },
@@ -628,6 +706,11 @@
       subtitle: 'Student Developer & Minecraft Mod Author',
       title: 'CYH CLOUD',
       intro: 'A junior-high student developer building Minecraft 1.20.1 mods and small utilities. Both mods and software are available for download on this site; every project is MIT-licensed and hosted on GitHub.',
+      cookie: {
+        text: 'This site uses a cookie to remember your language choice. Allow?',
+        allow: 'Allow',
+        decline: 'Decline'
+      },
       footer: {
         product: { title: 'Products', mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Video' },
         dev: { title: 'Developers', github: 'GitHub Repository', curseforge: 'CurseForge Page' },
@@ -642,6 +725,11 @@
       subtitle: 'Student Developer & Minecraft Mod Author',
       title: 'CYH CLOUD',
       intro: 'A junior-high student developer building Minecraft 1.20.1 mods and small utilities. Both mods and software are available for download on this site; every project is MIT-licensed and hosted on GitHub.',
+      cookie: {
+        text: 'This site uses a cookie to remember your language choice. Allow?',
+        allow: 'Allow',
+        decline: 'Decline'
+      },
       footer: {
         product: { title: 'Products', mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Video' },
         dev: { title: 'Developers', github: 'GitHub Repository', curseforge: 'CurseForge Page' },
@@ -656,6 +744,11 @@
       subtitle: 'Développeur étudiant & auteur de mods Minecraft',
       title: 'CYH CLOUD',
       intro: "Développeur collégien : je crée des mods Minecraft 1.20.1 et de petits logiciels. Les mods comme les logiciels sont téléchargeables sur ce site ; tous les projets sont open source sous licence MIT et hébergés sur GitHub.",
+      cookie: {
+        text: 'Ce site utilise un cookie pour mémoriser votre langue. Autoriser ?',
+        allow: 'Autoriser',
+        decline: 'Refuser'
+      },
       footer: {
         product: { title: 'Produits', mods: 'Mods', software: 'Logiciels', blog: 'Blog', video: 'Vidéo' },
         dev: { title: 'Développeurs', github: 'Dépôt GitHub', curseforge: 'Page CurseForge' },
@@ -670,6 +763,11 @@
       subtitle: 'Studentischer Entwickler & Minecraft-Mod-Autor',
       title: 'CYH CLOUD',
       intro: 'Schüler und Entwickler: Ich baue Minecraft-1.20.1-Mods und kleine Programme. Mods und Software gibt es beide hier zum Download; alle Projekte sind unter MIT-Lizenz open source und auf GitHub gehostet.',
+      cookie: {
+        text: 'Diese Website verwendet ein Cookie, um Ihre Sprache zu speichern. Erlauben?',
+        allow: 'Erlauben',
+        decline: 'Ablehnen'
+      },
       footer: {
         product: { title: 'Produkte', mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Video' },
         dev: { title: 'Entwickler', github: 'GitHub-Repository', curseforge: 'CurseForge-Seite' },
@@ -684,6 +782,11 @@
       subtitle: '学生開発者 & Minecraft モッド作者',
       title: 'CYH CLOUD',
       intro: '中学生開発者。Minecraft 1.20.1 の Mod と小規模なソフトウェアを開発しています。Mod もソフトウェアも当サイトからダウンロードできます。すべてのプロジェクトは MIT ライセンスでオープンソース化し、GitHub で公開しています。',
+      cookie: {
+        text: 'このサイトは言語設定を保存するために Cookie を使用します。許可しますか？',
+        allow: '許可',
+        decline: '拒否'
+      },
       footer: {
         product: { title: 'プロダクト', mods: 'モッド', software: 'ソフトウェア', blog: 'ブログ', video: '動画' },
         dev: { title: '開発者向け', github: 'GitHub リポジトリ', curseforge: 'CurseForge ページ' },
@@ -698,6 +801,11 @@
       subtitle: '학생 개발자 & Minecraft 모드 제작자',
       title: 'CYH CLOUD',
       intro: '중학생 개발자로, Minecraft 1.20.1 모드와 각종 소형 소프트웨어를 개발합니다. 모드와 소프트웨어 모두 이 사이트에서 내려받을 수 있습니다. 모든 프로젝트는 MIT 라이선스로 오픈소스이며 GitHub에 호스팅됩니다.',
+      cookie: {
+        text: '이 사이트는 언어 설정을 저장하기 위해 쿠키를 사용합니다. 허용하시겠습니까?',
+        allow: '허용',
+        decline: '거부'
+      },
       footer: {
         product: { title: '프로덕트', mods: '모드', software: '소프트웨어', blog: '블로그', video: '영상' },
         dev: { title: '개발자 리소스', github: 'GitHub 저장소', curseforge: 'CurseForge 페이지' },
@@ -712,6 +820,11 @@
       subtitle: 'Desarrollador estudiante y autor de mods de Minecraft',
       title: 'CYH CLOUD',
       intro: 'Desarrollador de secundaria: creo mods de Minecraft 1.20.1 y pequeños programas. Tanto los mods como el software se pueden descargar en este sitio; todos los proyectos son open source bajo licencia MIT y están alojados en GitHub.',
+      cookie: {
+        text: 'Este sitio usa una cookie para recordar tu idioma. ¿Permitir?',
+        allow: 'Permitir',
+        decline: 'Rechazar'
+      },
       footer: {
         product: { title: 'Productos', mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Vídeo' },
         dev: { title: 'Desarrolladores', github: 'Repositorio de GitHub', curseforge: 'Página de CurseForge' },
@@ -726,6 +839,11 @@
       subtitle: 'Студент-разработчик и автор модов для Minecraft',
       title: 'CYH CLOUD',
       intro: 'Разработчик-школьник: делаю моды для Minecraft 1.20.1 и небольшие программы. И моды, и программы можно скачать на этом сайте; все проекты с открытым исходным кодом под лицензией MIT, размещены на GitHub.',
+      cookie: {
+        text: 'Сайт использует cookie, чтобы запомнить язык. Разрешить?',
+        allow: 'Разрешить',
+        decline: 'Запретить'
+      },
       footer: {
         product: { title: 'Продукты', mods: 'Моды', software: 'Софт', blog: 'Блог', video: 'Видео' },
         dev: { title: 'Разработчикам', github: 'Репозиторий GitHub', curseforge: 'Страница CurseForge' },
@@ -799,8 +917,85 @@
     selects.forEach(function (sel) { sel.value = code; });
   }
 
+  /* ---------- 语言偏好 Cookie（首次检测，手动切换需同意） ---------- */
+  var LANG_COOKIE = 'cyh_lang';
+  var CONSENT_COOKIE = 'cyh_lang_consent';
+  var NOTE_SECONDS = 10;
+
+  var cookieNote = document.getElementById('cookie-note');
+  var cookieCount = document.getElementById('cookie-count');
+  var cookieAllow = document.getElementById('cookie-allow');
+  var cookieDecline = document.getElementById('cookie-decline');
+  var noteTimer = null;
+  var noteLeft = NOTE_SECONDS;
+  var declined = false;
+  try { declined = sessionStorage.getItem('cyh_lang_declined') === '1'; } catch (e) {}
+
+  function readCookie(name) {
+    var m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+
+  function writeCookie(name, value, days) {
+    var exp = new Date();
+    exp.setTime(exp.getTime() + days * 864e5);
+    document.cookie = name + '=' + encodeURIComponent(value) +
+      '; expires=' + exp.toUTCString() + '; path=/; SameSite=Lax';
+  }
+
+  function hasLangConsent() { return readCookie(CONSENT_COOKIE) === '1'; }
+
+  function saveLanguage(code) {
+    if (!hasLangConsent()) return false;
+    writeCookie(LANG_COOKIE, code, 365);
+    return true;
+  }
+
+  function hideCookieNote() {
+    if (noteTimer) { clearInterval(noteTimer); noteTimer = null; }
+    cookieNote.classList.remove('show');
+    setTimeout(function () {
+      if (!cookieNote.classList.contains('show')) cookieNote.hidden = true;
+    }, 200);
+  }
+
+  function showCookieNote() {
+    if (declined || hasLangConsent()) return;
+
+    cookieNote.hidden = false;
+    void cookieNote.offsetWidth;      /* 触发重排，让过渡生效 */
+    cookieNote.classList.add('show');
+
+    noteLeft = NOTE_SECONDS;
+    cookieCount.textContent = noteLeft + 's';
+    if (noteTimer) clearInterval(noteTimer);
+    noteTimer = setInterval(function () {
+      noteLeft -= 1;
+      cookieCount.textContent = (noteLeft > 0 ? noteLeft : 0) + 's';
+      if (noteLeft <= 0) {
+        hideCookieNote();             /* 倒计时结束未选择 = 不记录 */
+      }
+    }, 1000);
+  }
+
+  cookieAllow.addEventListener('click', function () {
+    writeCookie(CONSENT_COOKIE, '1', 365);
+    saveLanguage(root.lang);
+    hideCookieNote();
+  });
+
+  cookieDecline.addEventListener('click', function () {
+    declined = true;
+    try { sessionStorage.setItem('cyh_lang_declined', '1'); } catch (e) {}
+    hideCookieNote();
+  });
+
   selects.forEach(function (sel) {
-    sel.addEventListener('change', function () { applyLanguage(sel.value); });
+    sel.addEventListener('change', function () {
+      applyLanguage(sel.value);
+      if (saveLanguage(sel.value)) return;
+      if (!declined) showCookieNote();
+    });
   });
 
   /* ---------- 主题滑块 ---------- */
@@ -862,7 +1057,14 @@
 
   /* ---------- 初始化 ---------- */
   buildOptions();
-  applyLanguage(resolveLanguage(navigator.language || navigator.userLanguage));
+
+  /* 首次访问：跟随浏览器语言；已同意过 Cookie 且存过偏好：用存的语言 */
+  var storedLang = hasLangConsent() ? readCookie(LANG_COOKIE) : null;
+  var initialLang = storedLang
+    ? resolveLanguage(storedLang)
+    : resolveLanguage(navigator.language || navigator.userLanguage);
+
+  applyLanguage(initialLang);
   setTheme(root.getAttribute('data-theme'));
 
   window.addEventListener('load', function () {
