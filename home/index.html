@@ -47,6 +47,17 @@
     }
     document.documentElement.setAttribute('data-theme', saved);
   })();
+
+  // 地址栏规范化：GitHub Pages 会把 /home 301 到 /home/，
+  // 页面加载后立即把地址栏改回 /home（本站唯一入口，无尾斜杠、无子分支）
+  (function () {
+    var p = location.pathname;
+    if (p === '/home/' || p === '/home/index.html') {
+      try {
+        history.replaceState(null, '', '/home' + location.search + location.hash);
+      } catch (e) {}
+    }
+  })();
 </script>
 <style>
   :root,
@@ -883,7 +894,6 @@
       <div class="footer-col">
         <h2 data-i18n="footer.about.title">关于 CYH</h2>
         <ul>
-          <li><a href="#about" data-i18n="footer.about.me">关于我（About）</a></li>
           <li><a href="mailto:chengyouhang@cyhcloud.com" data-i18n="footer.about.contact">联系我（Email）</a></li>
         </ul>
       </div>
@@ -971,7 +981,7 @@
       footer: {
         product: { title: '产品矩阵', mods: '模组', software: '软件', blog: '博客', video: '视频' },
         dev: { title: '开发者资源', github: 'GitHub 仓库', curseforge: 'CurseForge 主页' },
-        about: { title: '关于 CYH', me: '关于我（About）', contact: '联系我（Email）' },
+        about: { title: '关于 CYH', contact: '联系我（Email）' },
         copyright: 'Copyright © 2026 CYH. 保留所有权利。',
         privacy: '隐私政策', terms: '使用条款', license: 'MIT 开源协议'
       }
@@ -996,7 +1006,7 @@
       footer: {
         product: { title: '產品矩陣', mods: '模組', software: '軟體', blog: '部落格', video: '影片' },
         dev: { title: '開發者資源', github: 'GitHub 儲存庫', curseforge: 'CurseForge 主頁' },
-        about: { title: '關於 CYH', me: '關於我（About）', contact: '聯絡我（Email）' },
+        about: { title: '關於 CYH', contact: '聯絡我（Email）' },
         copyright: 'Copyright © 2026 CYH. 保留所有權利。',
         privacy: '隱私政策', terms: '使用條款', license: 'MIT 開源授權'
       }
@@ -1021,7 +1031,7 @@
       footer: {
         product: { title: 'Products', mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Video' },
         dev: { title: 'Developers', github: 'GitHub Repository', curseforge: 'CurseForge Page' },
-        about: { title: 'About CYH', me: 'About Me', contact: 'Contact (Email)' },
+        about: { title: 'About CYH', contact: 'Contact (Email)' },
         copyright: 'Copyright © 2026 CYH. All rights reserved.',
         privacy: 'Privacy Policy', terms: 'Terms of Use', license: 'MIT License'
       }
@@ -1046,7 +1056,7 @@
       footer: {
         product: { title: 'Products', mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Video' },
         dev: { title: 'Developers', github: 'GitHub Repository', curseforge: 'CurseForge Page' },
-        about: { title: 'About CYH', me: 'About Me', contact: 'Contact (Email)' },
+        about: { title: 'About CYH', contact: 'Contact (Email)' },
         copyright: 'Copyright © 2026 CYH. All rights reserved.',
         privacy: 'Privacy Policy', terms: 'Terms of Use', license: 'MIT Licence'
       }
@@ -1071,7 +1081,7 @@
       footer: {
         product: { title: 'Produits', mods: 'Mods', software: 'Logiciels', blog: 'Blog', video: 'Vidéo' },
         dev: { title: 'Développeurs', github: 'Dépôt GitHub', curseforge: 'Page CurseForge' },
-        about: { title: 'À propos de CYH', me: 'À propos de moi', contact: 'Contact (e-mail)' },
+        about: { title: 'À propos de CYH', contact: 'Contact (e-mail)' },
         copyright: 'Copyright © 2026 CYH. Tous droits réservés.',
         privacy: 'Confidentialité', terms: "Conditions d'utilisation", license: 'Licence MIT'
       }
@@ -1096,7 +1106,7 @@
       footer: {
         product: { title: 'Produkte', mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Video' },
         dev: { title: 'Entwickler', github: 'GitHub-Repository', curseforge: 'CurseForge-Seite' },
-        about: { title: 'Über CYH', me: 'Über mich', contact: 'Kontakt (E-Mail)' },
+        about: { title: 'Über CYH', contact: 'Kontakt (E-Mail)' },
         copyright: 'Copyright © 2026 CYH. Alle Rechte vorbehalten.',
         privacy: 'Datenschutz', terms: 'Nutzungsbedingungen', license: 'MIT-Lizenz'
       }
@@ -1121,7 +1131,7 @@
       footer: {
         product: { title: 'プロダクト', mods: 'モッド', software: 'ソフトウェア', blog: 'ブログ', video: '動画' },
         dev: { title: '開発者向け', github: 'GitHub リポジトリ', curseforge: 'CurseForge ページ' },
-        about: { title: 'CYH について', me: 'プロフィール', contact: 'お問い合わせ（メール）' },
+        about: { title: 'CYH について', contact: 'お問い合わせ（メール）' },
         copyright: 'Copyright © 2026 CYH. 無断転載を禁じます。',
         privacy: 'プライバシーポリシー', terms: '利用規約', license: 'MIT ライセンス'
       }
@@ -1146,7 +1156,7 @@
       footer: {
         product: { title: '프로덕트', mods: '모드', software: '소프트웨어', blog: '블로그', video: '영상' },
         dev: { title: '개발자 리소스', github: 'GitHub 저장소', curseforge: 'CurseForge 페이지' },
-        about: { title: 'CYH 소개', me: '소개', contact: '문의 (이메일)' },
+        about: { title: 'CYH 소개', contact: '문의 (이메일)' },
         copyright: 'Copyright © 2026 CYH. 모든 권리 보유.',
         privacy: '개인정보 처리방침', terms: '이용 약관', license: 'MIT 라이선스'
       }
@@ -1171,7 +1181,7 @@
       footer: {
         product: { title: 'Productos', mods: 'Mods', software: 'Software', blog: 'Blog', video: 'Vídeo' },
         dev: { title: 'Desarrolladores', github: 'Repositorio de GitHub', curseforge: 'Página de CurseForge' },
-        about: { title: 'Acerca de CYH', me: 'Sobre mí', contact: 'Contacto (correo)' },
+        about: { title: 'Acerca de CYH', contact: 'Contacto (correo)' },
         copyright: 'Copyright © 2026 CYH. Todos los derechos reservados.',
         privacy: 'Privacidad', terms: 'Términos de uso', license: 'Licencia MIT'
       }
@@ -1196,7 +1206,7 @@
       footer: {
         product: { title: 'Продукты', mods: 'Моды', software: 'Софт', blog: 'Блог', video: 'Видео' },
         dev: { title: 'Разработчикам', github: 'Репозиторий GitHub', curseforge: 'Страница CurseForge' },
-        about: { title: 'О CYH', me: 'Обо мне', contact: 'Связаться (e-mail)' },
+        about: { title: 'О CYH', contact: 'Связаться (e-mail)' },
         copyright: 'Copyright © 2026 CYH. Все права защищены.',
         privacy: 'Конфиденциальность', terms: 'Условия использования', license: 'Лицензия MIT'
       }
