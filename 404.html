@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — CYH CLOUD</title>
+<meta name="robots" content="noindex">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0d1117;
+    --text: #c9d1d9;
+    --muted: #8b949e;
+    --border: #30363d;
+    --accent: #3fb950;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      color-scheme: light;
+      --bg: #ffffff;
+      --text: #1f2328;
+      --muted: #59636e;
+      --border: #d0d7de;
+      --accent: #1a7f37;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; border-radius: 0; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    padding: 24px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .code {
+    font-size: 64px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .code span { color: var(--accent); }
+
+  p { font-size: 14px; line-height: 1.8; color: var(--muted); max-width: 420px; }
+
+  .en { font-size: 12.5px; color: var(--muted); }
+
+  a {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 8px 18px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  a:hover { border-color: var(--muted); color: var(--accent); }
+</style>
+</head>
+<body>
+  <div class="code">4<span>0</span>4</div>
+  <p>这个地址不存在。可能是链接打错了，或者页面已经移走。</p>
+  <p class="en">This page doesn't exist. Check the URL or head back home.</p>
+  <a href="/home">返回首页 / Back to home</a>
+</body>
+</html>
